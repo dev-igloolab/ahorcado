@@ -1,21 +1,23 @@
-<script>
-  import Keyboard from "./lib/Keyboard.svelte";
-  import WordToGess from "./lib/WordToGess.svelte";
-  import { incorrectGuesses } from "./lib/words";
+<script lang="ts">
+  import { GameStatus, step } from "./lib/game";
+  import Welcome from "./views/Welcome.svelte";
+  import Instrucctions from "./views/Instrucctions.svelte";
+  import Ahorcado from "./views/Ahorcado.svelte";
 </script>
 
 <main>
-  <h1 class="text-center font-bold text-4xl mb-10">
-    Adivina la palabra si quieres salir de aquí
-  </h1>
 
-  <div class="flex flex-col gap-20">
-    <WordToGess />
+  {#key $step}
+    {#if $step === GameStatus.Welcome}
+      <Welcome />
+    {/if}
 
-    <Keyboard />
-  </div>
+    {#if $step === GameStatus.Instructions}
+      <Instrucctions />
+    {/if}
 
-  <div class="fixed bottom-0 right-0 p-4 bg-red-500 text-white rounded-tl-lg">
-    {$incorrectGuesses}
-  </div>
+    {#if $step === GameStatus.Ahorcado}
+      <Ahorcado />
+    {/if}
+  {/key}
 </main>
