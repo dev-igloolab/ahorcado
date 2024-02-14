@@ -1,9 +1,9 @@
 <script lang="ts">
   import { guessedWord, incorrectGuesses, wordToGuess } from "./words";
 
-  const letters = Array.from({ length: 26 }, (_, i) =>
-    String.fromCharCode(65 + i)
-  );
+  const lettersAndDigits = Array.from({ length: 36 }, (_, i) =>
+  i < 26 ? String.fromCharCode(65 + i) : String(i - 26)
+);
 
   const handleGuess = (letter: string, e: MouseEvent) => {
     let found = false;
@@ -22,8 +22,7 @@
       incorrectGuesses.update((value) => value + 1);
     }
 
-
-    if ($guessedWord.join("") === $wordToGuess) {
+    if ($guessedWord.join("").toLocaleLowerCase() === $wordToGuess.toLocaleLowerCase()) {
       alert("Ganaste");
     }
 
@@ -35,14 +34,14 @@
 
 <section>
   <div class="flex flex-wrap justify-center">
-    {#each letters as letter}
+    {#each lettersAndDigits as char}
       <button
         class="text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 disabled:opacity-50 disabled:cursor-not-allowed"
         on:click={
           (e) => {
-            handleGuess(letter, e);
+            handleGuess(char, e);
           }
-        }>{letter}</button
+        }>{char}</button
       >
     {/each}
   </div>

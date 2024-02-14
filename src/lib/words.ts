@@ -1,12 +1,6 @@
 import { get, writable } from 'svelte/store';
 
-const words = ["igloolab", "andres", "google"];
-
-const getRandomWord = () => {
-  return words[Math.floor(Math.random() * words.length)];
-}
-
-export const wordToGuess  = writable(getRandomWord());
+export const wordToGuess  = writable("Interleucina5");
 
 export const incorrectGuesses = writable(0);
 
