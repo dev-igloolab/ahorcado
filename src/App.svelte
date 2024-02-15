@@ -18,7 +18,7 @@
     {/if}
 
     {#if $step === GameStatus.Ahorcado}
-      <Puzzle />
+      <Ahorcado />
     {/if}
   {/key}
 </main>

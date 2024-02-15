@@ -1,25 +1,16 @@
 <script lang="ts">
-  import { step, GameStatus } from "../lib/game";
+  import Button from "../lib/Button.svelte";
+import { step, GameStatus } from "../lib/game";
 </script>
 
-<section class="container mx-auto">
-  <h1 class="text-3xl font-bold text-balance">Instrucciones</h1>
+<section class="container mx-auto flex flex-col gap-16 items-center">
+  <img src="escape-room.webp" alt="Logo de Alergo Pulse" width="300" class="h-full mx-auto">
 
-  <p class="text-xl">
-    Este es un juego de adivinar la palabra, tienes 6 intentos para adivinar la
-    palabra, si no lo logras, pierdes.
-  </p>
+  <h1 class="font-bold text-9xl">¡Bienvenidos!</h1>
 
-  <p class="text-xl">
-    Si logras adivinar la palabra, ganas.
-  </p>
+  <p class="text-balance text-5xl text-center">Los invitamos a tomar decisiones estratégicas para salvar la vida de este paciente...</p>
 
-  <p class="text-xl">
-    No vas a ganar dinero, pero si mucha satisfacción.
-  </p>
+  <p class="font-semibold text-4xl">¡Buena suerte!</p>
 
-  <button on:click={() => step.set(GameStatus.Ahorcado)
-  } class="text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">
-    Continuar
-  </button>
+  <Button text="Empezar" onClick={() => step.set(GameStatus.Ahorcado)} />
 </section>

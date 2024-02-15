@@ -1,12 +1,12 @@
 <script lang="ts">
-  import { step, GameStatus } from "../lib/game";
+  import Button from "../lib/Button.svelte";
+import { step, GameStatus } from "../lib/game";
 </script>
 
-<section class="container mx-auto">
-  <h1 class="text-3xl font-bold text-balance">Bienvenido al Scape Room de alergio pulse</h1>
+<section class="container mx-auto flex flex-col gap-16 items-center">
+  <img src="logo.webp" alt="Logo de Alergo Pulse" width="200" class="h-full mx-auto">
 
-  <button on:click={() => step.set(GameStatus.Instructions)
-  } class="text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">
-    Empezar
-  </button>
+  <img src="escape-room.webp" alt="Logo de Alergo Pulse" width="700" class="h-full mx-auto">
+
+  <Button text="Iniciar" onClick={() => step.set(GameStatus.Instructions)} />
 </section>
