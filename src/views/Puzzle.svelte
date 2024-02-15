@@ -1,15 +1,15 @@
 <script lang="ts">
   import { onMount } from "svelte";
+  import type { Molecule } from "../types/Puzzle.types";
+  import {
+    checkMoleculesToJoin,
+    distanceBetween,
+    isOverlapping,
+  } from "../lib/Puzzle";
 
   onMount(() => {
     const canvas = document.getElementById("gameCanvas") as HTMLCanvasElement;
     const ctx = canvas.getContext("2d");
-
-    interface Molecule {
-      x: number;
-      y: number;
-      color: string;
-    }
 
     const molecules: Molecule[] = [];
     const moleculeRadius = 20;
@@ -30,39 +30,8 @@
           color:
             moleculeColors[Math.floor(Math.random() * moleculeColors.length)],
         };
-      } while (isOverlapping(molecule));
+      } while (isOverlapping(molecule, molecules, moleculeRadius));
       molecules.push(molecule);
-    }
-
-    // Check if two molecules are close enough to join
-    function checkMoleculesToJoin() {
-      molecules.forEach((molecule1) => {
-        molecules.forEach((molecule2) => {
-          if (
-            molecule1 !== molecule2 &&
-            distanceBetween(molecule1, molecule2) < moleculeRadius * 2
-          ) {
-            moleculesToJoin.add(molecule1);
-            moleculesToJoin.add(molecule2);
-          }
-        });
-      });
-    }
-
-    // Check if a molecule overlaps with any other molecule
-    function isOverlapping(newMolecule: Molecule) {
-      return molecules.some(
-        (molecule) =>
-          distanceBetween(newMolecule, molecule) < moleculeRadius * 2
-      );
-    }
-
-    // Calculate distance between two molecules
-    function distanceBetween(molecule1: Molecule, molecule2: Molecule) {
-      return Math.sqrt(
-        Math.pow(molecule2.x - molecule1.x, 2) +
-          Math.pow(molecule2.y - molecule1.y, 2)
-      );
     }
 
     // Event listeners for mouse interaction
@@ -114,7 +83,7 @@
     canvas.addEventListener("mouseup", function () {
       if (isDragging && selectedMolecule) {
         moleculesToJoin.clear();
-        checkMoleculesToJoin();
+        checkMoleculesToJoin(molecules, moleculesToJoin, moleculeRadius);
         if (moleculesToJoin.size === 2) {
           const joinedMolecules = Array.from(moleculesToJoin);
           if (joinedMolecules[0].color === joinedMolecules[1].color) {
@@ -134,7 +103,7 @@
               moleculeRadius,
             color: selectedMolecule.color,
           };
-        } while (isOverlapping(newPosition));
+        } while (isOverlapping(newPosition, molecules, moleculeRadius));
         selectedMolecule.x = newPosition.x;
         selectedMolecule.y = newPosition.y;
         drawMolecules();
@@ -172,7 +141,7 @@
       event.preventDefault();
       if (isDragging && selectedMolecule) {
         moleculesToJoin.clear();
-        checkMoleculesToJoin();
+        checkMoleculesToJoin(molecules, moleculesToJoin, moleculeRadius);
         if (moleculesToJoin.size === 2) {
           const joinedMolecules = Array.from(moleculesToJoin);
           if (joinedMolecules[0].color === joinedMolecules[1].color) {
@@ -192,7 +161,7 @@
               moleculeRadius,
             color: selectedMolecule.color,
           };
-        } while (isOverlapping(newPosition));
+        } while (isOverlapping(newPosition, molecules, moleculeRadius));
         selectedMolecule.x = newPosition.x;
         selectedMolecule.y = newPosition.y;
         drawMolecules();
