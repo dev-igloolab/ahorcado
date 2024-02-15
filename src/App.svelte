@@ -3,6 +3,7 @@
   import Welcome from "./views/Welcome.svelte";
   import Instrucctions from "./views/Instrucctions.svelte";
   import Ahorcado from "./views/Ahorcado.svelte";
+  import Puzzle from "./views/Puzzle.svelte";
 </script>
 
 <main>
@@ -17,7 +18,7 @@
     {/if}
 
     {#if $step === GameStatus.Ahorcado}
-      <Ahorcado />
+      <Puzzle />
     {/if}
   {/key}
 </main>
