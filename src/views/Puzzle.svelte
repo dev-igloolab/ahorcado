@@ -67,31 +67,52 @@
 
     // Event listeners for mouse interaction
     let selectedMolecule: Molecule | null = null;
-    canvas.addEventListener("mousedown", function (event) {
-      const mouseX = event.clientX - canvas.getBoundingClientRect().left;
-      const mouseY = event.clientY - canvas.getBoundingClientRect().top;
+    let isDragging = false;
 
+    function getMousePos(event: MouseEvent | TouchEvent) {
+      let clientX, clientY;
+      if (event instanceof MouseEvent) {
+        clientX = event.clientX;
+        clientY = event.clientY;
+      } else if (event instanceof TouchEvent && event.touches.length === 1) {
+        clientX = event.touches[0].clientX;
+        clientY = event.touches[0].clientY;
+      }
+
+      if (!clientX || !clientY) {
+        return { x: 0, y: 0 };
+      }
+
+      return {
+        x: clientX - canvas.getBoundingClientRect().left,
+        y: clientY - canvas.getBoundingClientRect().top,
+      };
+    }
+
+    canvas.addEventListener("mousedown", function (event) {
+      const mousePos = getMousePos(event);
       molecules.forEach((molecule) => {
         if (
-          distanceBetween(molecule, { x: mouseX, y: mouseY, color: molecule.color }) < moleculeRadius
+          distanceBetween(molecule, { ...mousePos, color: molecule.color }) <
+          moleculeRadius
         ) {
           selectedMolecule = molecule;
+          isDragging = true;
         }
       });
     });
 
     canvas.addEventListener("mousemove", function (event) {
-      if (selectedMolecule) {
-        const mouseX = event.clientX - canvas.getBoundingClientRect().left;
-        const mouseY = event.clientY - canvas.getBoundingClientRect().top;
-        selectedMolecule.x = mouseX;
-        selectedMolecule.y = mouseY;
+      if (isDragging && selectedMolecule) {
+        const mousePos = getMousePos(event);
+        selectedMolecule.x = mousePos.x;
+        selectedMolecule.y = mousePos.y;
         drawMolecules();
       }
     });
 
     canvas.addEventListener("mouseup", function () {
-      if (selectedMolecule) {
+      if (isDragging && selectedMolecule) {
         moleculesToJoin.clear();
         checkMoleculesToJoin();
         if (moleculesToJoin.size === 2) {
@@ -119,6 +140,65 @@
         drawMolecules();
         selectedMolecule = null;
       }
+      isDragging = false;
+    });
+
+    // Touch events
+    canvas.addEventListener("touchstart", function (event) {
+      event.preventDefault();
+      const touchPos = getMousePos(event);
+      molecules.forEach((molecule) => {
+        if (
+          distanceBetween(molecule, { ...touchPos, color: molecule.color }) <
+          moleculeRadius
+        ) {
+          selectedMolecule = molecule;
+          isDragging = true;
+        }
+      });
+    });
+
+    canvas.addEventListener("touchmove", function (event) {
+      event.preventDefault();
+      if (isDragging && selectedMolecule) {
+        const touchPos = getMousePos(event);
+        selectedMolecule.x = touchPos.x;
+        selectedMolecule.y = touchPos.y;
+        drawMolecules();
+      }
+    });
+
+    canvas.addEventListener("touchend", function (event) {
+      event.preventDefault();
+      if (isDragging && selectedMolecule) {
+        moleculesToJoin.clear();
+        checkMoleculesToJoin();
+        if (moleculesToJoin.size === 2) {
+          const joinedMolecules = Array.from(moleculesToJoin);
+          if (joinedMolecules[0].color === joinedMolecules[1].color) {
+            alert("¡Ganaste!");
+            return;
+          }
+        }
+        // Return molecule to initial position
+        let newPosition: Molecule;
+        do {
+          newPosition = {
+            x:
+              Math.random() * (canvas.width - 2 * moleculeRadius) +
+              moleculeRadius,
+            y:
+              Math.random() * (canvas.height - 2 * moleculeRadius) +
+              moleculeRadius,
+            color: selectedMolecule.color,
+          };
+        } while (isOverlapping(newPosition));
+        selectedMolecule.x = newPosition.x;
+        selectedMolecule.y = newPosition.y;
+        drawMolecules();
+        selectedMolecule = null;
+      }
+      isDragging = false;
     });
 
     // Draw molecules
