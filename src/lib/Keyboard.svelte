@@ -1,5 +1,10 @@
 <script lang="ts">
-  import { guessedWord, incorrectGuesses, wordToGuess } from "./words";
+  import {
+    guessedWord,
+    icorrectChars,
+    incorrectGuesses,
+    wordToGuess,
+  } from "./words";
 
   const lettersAndDigits = Array.from({ length: 36 }, (_, i) =>
     i < 26 ? String.fromCharCode(65 + i) : String(i - 26)
@@ -20,6 +25,7 @@
 
     if (!found) {
       incorrectGuesses.update((value) => value + 1);
+      icorrectChars.update((value) => [...value, letter]);
     }
 
     if (
