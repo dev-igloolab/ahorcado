@@ -1,8 +1,17 @@
 <script lang="ts">
   import Button from "../lib/Button.svelte";
   import Keyboard from "../lib/Keyboard.svelte";
+  import Modal from "../lib/Modal.svelte";
   import WordToGess from "../lib/WordToGess.svelte";
   import { icorrectChars } from "../lib/words";
+
+  let showModalHint = false;
+
+  const hints = [
+    "Es clave en la inflamación T2",
+    "Tiene interacción con mas de 5 blancos celulares.",
+    "Su inhibición logra el control del paciente con asma grave T2.",
+  ];
 </script>
 
 <section class="container mx-auto">
@@ -43,7 +52,17 @@
   </div> -->
 
   <div class="flex gap-5 absolute top-10 right-10">
-    <Button text="💡" />
-    <Button text="Insertar código" />
+    <Button on:click={() => (showModalHint = true)}>💡</Button>
+    <Button>Insertar código</Button>
   </div>
 </section>
+
+<Modal bind:showModal={showModalHint}>
+  <h2 slot="header" class="text-5xl font-bold">Pistas</h2>
+
+  <ol class="list-decimal list-inside flex flex-col gap-5 marker:font-bold">
+    {#each hints as hint}
+      <li class="text-2xl">{hint}</li>
+    {/each}
+  </ol>
+</Modal>
