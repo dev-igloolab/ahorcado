@@ -6,9 +6,16 @@
     wordToGuess,
   } from "./words";
 
-  const lettersAndDigits = Array.from({ length: 36 }, (_, i) =>
-    i < 26 ? String.fromCharCode(65 + i) : String(i - 26)
-  );
+  type Type = "WordsAndNumbers" | "Numbers" | "Words";
+
+  export let type: Type = "WordsAndNumbers";
+
+  const chars =
+    type === "WordsAndNumbers"
+      ? "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890"
+      : type === "Numbers"
+        ? "1234567890"
+        : "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
   const handleGuess = (letter: string, e: MouseEvent) => {
     let found = false;
@@ -49,7 +56,7 @@
 
 <section>
   <div class="flex flex-wrap gap-3">
-    {#each lettersAndDigits as char}
+    {#each chars as char}
       <button
         class="text-white bg-transparent hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-3xl border border-white text-center disabled:cursor-not-allowed disabled:bg-slate-400 aspect-square w-16 h-16 flex items-center justify-center"
         on:click={(e) => {

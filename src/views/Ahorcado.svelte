@@ -1,11 +1,13 @@
 <script lang="ts">
   import Button from "../lib/Button.svelte";
+  import InsertCodeAhorcado from "../lib/InsertCodeAhorcado.svelte";
   import Keyboard from "../lib/Keyboard.svelte";
   import Modal from "../lib/Modal.svelte";
   import WordToGess from "../lib/WordToGess.svelte";
   import { icorrectChars } from "../lib/words";
 
   let showModalHint = false;
+  let showModalCode = false;
 
   const hints = [
     "Es clave en la inflamación T2",
@@ -53,11 +55,11 @@
 
   <div class="flex gap-5 absolute top-10 right-10">
     <Button on:click={() => (showModalHint = true)}>💡</Button>
-    <Button>Insertar código</Button>
+    <Button on:click={() => (showModalCode = true)}>Insertar código</Button>
   </div>
 </section>
 
-<Modal bind:showModal={showModalHint}>
+<Modal bind:showModal={showModalHint} modalId="modalHint">
   <h2 slot="header" class="text-5xl font-bold">Pistas</h2>
 
   <ol class="list-decimal list-inside flex flex-col gap-5 marker:font-bold">
@@ -65,4 +67,18 @@
       <li class="text-2xl">{hint}</li>
     {/each}
   </ol>
+</Modal>
+
+<Modal bind:showModal={showModalCode} modalId="modalCode">
+  <h2 slot="header" class="text-5xl font-bold">Código</h2>
+
+  <main>
+    <p class="text-xl">
+      Este código cumple una función vital para salvar la vida del paciente,
+      desbloqueará un instrumento para poder ver con mayor claridad las
+      alternativas de mejoría.
+    </p>
+
+    <InsertCodeAhorcado />
+  </main>
 </Modal>

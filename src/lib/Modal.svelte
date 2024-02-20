@@ -2,10 +2,11 @@
   import { onMount } from "svelte";
 
   export let showModal = false;
+  export let modalId = "modal";
   let dialog: HTMLDialogElement | null = null;
 
   onMount(() => {
-    dialog = document.getElementById("modal") as HTMLDialogElement;
+    dialog = document.getElementById(modalId) as HTMLDialogElement;
   });
 
   $: {
@@ -18,7 +19,7 @@
 <!-- svelte-ignore a11y-click-events-have-key-events -->
 <!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
 <dialog
-  id="modal"
+  id={modalId}
   bind:this={dialog}
   on:click|self={() => {
     showModal = false;
