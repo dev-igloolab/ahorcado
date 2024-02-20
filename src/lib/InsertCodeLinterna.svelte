@@ -2,7 +2,8 @@
   import Button from "./Button.svelte";
   import { step, GameStatus } from "./game";
 
-  const chars = "0123456789";
+  const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+  const CORRECT_CODE = "NUCALA";
 
   let code = "";
   let isCorrect = false;
@@ -10,8 +11,8 @@
   function handleGuess(char: string) {
     code += char;
 
-    if (code.length === 4) {
-      isCorrect = code === "4342";
+    if (code.length === 6) {
+      isCorrect = code === CORRECT_CODE;
     }
   }
 </script>
@@ -19,7 +20,7 @@
 <section class="flex flex-col gap-10 mt-10">
   <!-- Display code typed -->
   <div class="flex gap-3 justify-center">
-    {#each [0, 1, 2, 3] as _, index}
+    {#each [0, 1, 2, 3, 4, 5] as _, index}
       <input
         type="text"
         class="w-16 h-16 bg-transparent text-center text-black border-b-2 border-black text-5xl"
@@ -44,12 +45,11 @@
     <div class="flex justify-center items-center flex-col gap-5">
       <p class="text-3xl text-center text-green-500">Código correcto</p>
 
-      <Button on:click={() => step.set(GameStatus.CodeHidden)}>Continuar</Button
-      >
+      <Button on:click={() => step.set(GameStatus.GameOver)}>Continuar</Button>
     </div>
   {/if}
 
-  {#if !isCorrect && code.length === 4}
+  {#if !isCorrect && code.length === 6}
     <div class="flex justify-center items-center flex-col gap-5">
       <p class="text-3xl text-center text-red-500">Código incorrecto</p>
 

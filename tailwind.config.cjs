@@ -6,6 +6,8 @@ module.exports = {
     extend: {
       backgroundImage: {
         'main': "url('/fondo.webp')",
+        'codigo-oculto': "url('/fondo-codigo-oculto.webp')",
+        'linterna': "url('/fondo-linterna.webp')",
       },
       fontFamily: {
         'sans': ['Poppins', 'sans-serif'],

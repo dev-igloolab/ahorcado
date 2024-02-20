@@ -4,7 +4,8 @@ export enum GameStatus {
   Welcome,
   Instructions,
   Ahorcado,
-  ToolsBox,
+  CodeHidden,
+  Linterna,
   Puzzle,
   GameOver,
 }
