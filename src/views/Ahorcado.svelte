@@ -4,7 +4,7 @@
   import Keyboard from "../lib/Keyboard.svelte";
   import Modal from "../lib/Modal.svelte";
   import WordToGess from "../lib/WordToGess.svelte";
-  import { icorrectChars } from "../lib/words";
+  import { icorrectChars, incorrectGuesses } from "../lib/words";
 
   let showModalHint = false;
   let showModalCode = false;
@@ -16,12 +16,17 @@
   ];
 </script>
 
-<section class="container mx-auto">
+<section class="container mx-auto mt-20">
   <div class="grid grid-cols-12 gap-5">
     <div class="flex flex-col gap-20 col-span-11">
       <div class="grid grid-cols-7 gap-20">
         <div class="col-span-3">
-          <img src="https://via.placeholder.com/800x400" alt="Ahorcado" />
+          <img
+            src={`/ahorcado/0${$incorrectGuesses}.webp`}
+            alt="Ahorcado"
+            width="500"
+            class="absolute top-5 left-44"
+          />
         </div>
 
         <div class="col-span-4 flex flex-col gap-10">

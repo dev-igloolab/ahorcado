@@ -31,7 +31,9 @@
     }
 
     if (!found) {
-      incorrectGuesses.update((value) => value + 1);
+      if ($incorrectGuesses < 7) {
+        incorrectGuesses.update((value) => value + 1);
+      }
       icorrectChars.update((value) => [...value, letter]);
     }
 
@@ -48,8 +50,7 @@
       });
     }
 
-    if ($incorrectGuesses === 6) {
-      alert("Perdiste");
+    if ($incorrectGuesses === 7) {
     }
   };
 </script>

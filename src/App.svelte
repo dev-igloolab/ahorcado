@@ -7,7 +7,6 @@
 </script>
 
 <main>
-
   {#key $step}
     {#if $step === GameStatus.Welcome}
       <Welcome />

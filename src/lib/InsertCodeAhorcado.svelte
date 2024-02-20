@@ -11,8 +11,6 @@
 
     if (code.length === 4) {
       isCorrect = code === "4342";
-    } else {
-      isCorrect = false;
     }
   }
 </script>
