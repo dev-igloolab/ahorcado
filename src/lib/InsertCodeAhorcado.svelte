@@ -8,6 +8,10 @@
   let isCorrect = false;
 
   function handleGuess(char: string) {
+    if (code.length === 4) {
+      return;
+    }
+
     code += char;
 
     if (code.length === 4) {

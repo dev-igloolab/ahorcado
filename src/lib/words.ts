@@ -11,3 +11,13 @@ export const guessedWord = writable(
 );
 
 export const icorrectChars = writable<string[]>([]);
+
+export const reloadGame = () => {
+  incorrectGuesses.set(0);
+  guessedWord.set(
+    get(wordToGuess)
+      .split("")
+      .map(() => "_")
+  );
+  icorrectChars.set([]);
+};
