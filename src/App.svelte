@@ -7,19 +7,21 @@
   import CodeHidden from "./views/CodeHidden.svelte";
   import Linterna from "./views/Linterna.svelte";
   import Fin from "./views/Fin.svelte";
+  import OrderWords from "./views/OrderWords.svelte";
+  import Waldo from "./views/Waldo.svelte";
 
   let fondo = "bg-main";
 
   $: {
     if ($step === GameStatus.CodeHidden) {
       fondo = "bg-codigo-oculto";
-    }
-
-    if ($step === GameStatus.Linterna) {
+    } else if ($step === GameStatus.Linterna) {
       fondo = "bg-linterna";
-    }
-
-    if ($step === GameStatus.GameOver) {
+    } else if ($step === GameStatus.Puzzle) {
+      fondo = "bg-puzzle";
+    } else if ($step === GameStatus.OrderWords) {
+      fondo = "bg-palabrasorden";
+    } else {
       fondo = "bg-main";
     }
   }
@@ -47,6 +49,18 @@
 
     {#if $step === GameStatus.Linterna}
       <Linterna />
+    {/if}
+
+    {#if $step === GameStatus.Puzzle}
+      <Puzzle />
+    {/if}
+
+    {#if $step === GameStatus.OrderWords}
+      <OrderWords />
+    {/if}
+
+    {#if $step === GameStatus.Waldo}
+      <Waldo />
     {/if}
 
     {#if $step === GameStatus.GameOver}

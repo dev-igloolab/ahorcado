@@ -10,7 +10,6 @@
   });
 
   $: {
-    console.log(modalId + ": " + showModal);
     if (dialog && showModal) {
       dialog.showModal();
     }

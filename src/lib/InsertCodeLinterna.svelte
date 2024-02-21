@@ -49,7 +49,7 @@
     <div class="flex justify-center items-center flex-col gap-5">
       <p class="text-3xl text-center text-green-500">Código correcto</p>
 
-      <Button on:click={() => step.set(GameStatus.GameOver)}>Continuar</Button>
+      <Button on:click={() => step.set(GameStatus.Puzzle)}>Continuar</Button>
     </div>
   {/if}
 

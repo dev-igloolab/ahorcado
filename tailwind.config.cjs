@@ -8,6 +8,8 @@ module.exports = {
         'main': "url('/fondo.webp')",
         'codigo-oculto': "url('/fondo-codigo-oculto.webp')",
         'linterna': "url('/fondo-linterna.webp')",
+        'puzzle': "url('/fondo-puzzle.webp')",
+        'palabrasorden': "url('/fondo-palabrasorden.webp')",
       },
       fontFamily: {
         'sans': ['Poppins', 'sans-serif'],

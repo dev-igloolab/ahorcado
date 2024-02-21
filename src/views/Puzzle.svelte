@@ -6,6 +6,11 @@
     distanceBetween,
     isOverlapping,
   } from "../lib/Puzzle";
+  import Button from "../lib/Button.svelte";
+  import Modal from "../lib/Modal.svelte";
+  import { step, GameStatus } from "../lib/game";
+
+  let showModal = false;
 
   onMount(() => {
     const canvas = document.getElementById("gameCanvas") as HTMLCanvasElement;
@@ -145,7 +150,7 @@
         if (moleculesToJoin.size === 2) {
           const joinedMolecules = Array.from(moleculesToJoin);
           if (joinedMolecules[0].color === joinedMolecules[1].color) {
-            alert("¡Ganaste!");
+            showModal = true;
             return;
           }
         }
@@ -187,14 +192,30 @@
   });
 </script>
 
-<section class="grid min-h-screen place-content-center">
-  <canvas id="gameCanvas" width="500" height="500"></canvas>
+<section>
+  <h1 class="font-light absolute top-10 left-10 text-4xl">
+    Junta la interlicina-5 con la molécula de mepolizmab
+  </h1>
+  <canvas id="gameCanvas" width="1840" height="800"></canvas>
 </section>
+
+<Modal bind:showModal modalId="modalPuzzle">
+  <h2 slot="header" class="text-5xl font-bold">¡Excelente!</h2>
+
+  <main class="flex flex-col gap-10 items-center justify-center">
+    <p class="text-xl">
+      Eres bueno en esto de juntar cosas... dale a continuar para seguir con la
+      experiencia
+    </p>
+
+    <Button on:click={() => step.set(GameStatus.OrderWords)}>Continuar</Button>
+  </main>
+</Modal>
 
 <style>
   canvas {
     display: block;
-    background-color: #f0f0f0;
+    background-color: transparent;
     margin: 0 auto;
     border-radius: 10px;
   }

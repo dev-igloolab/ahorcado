@@ -7,6 +7,8 @@ export enum GameStatus {
   CodeHidden,
   Linterna,
   Puzzle,
+  OrderWords,
+  Waldo,
   GameOver,
 }
 
