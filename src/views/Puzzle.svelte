@@ -92,7 +92,7 @@
         if (moleculesToJoin.size === 2) {
           const joinedMolecules = Array.from(moleculesToJoin);
           if (joinedMolecules[0].color === joinedMolecules[1].color) {
-            alert("¡Ganaste!");
+            showModal = true;
             return;
           }
         }
