@@ -17,8 +17,21 @@
     const ctx = canvas.getContext("2d");
 
     const molecules: Molecule[] = [];
-    const moleculeRadius = 20;
-    const moleculeColors = ["#ff0000", "#0000ff", "#00ff00"]; // Colors for the two types of molecules
+    const moleculeRadius = 50;
+    const moleculeColors = [
+      "/molecules/celula-epitelia-v4.webp",
+      "/molecules/celula-plasmatica-2.webp",
+      "/molecules/eosinófilo.webp",
+      "/molecules/fibroblasto.webp",
+      "/molecules/Il5_V2.webp",
+      "/molecules/IL6_V1.webp",
+      "/molecules/Il17_V1.webp",
+      "/molecules/mastocito5.0.webp",
+      "/molecules/mepoli.webp",
+      "/molecules/unnamed.webp",
+    ];
+    const moleculeImages: Record<string, HTMLImageElement> = {};
+
     const moleculesToJoin = new Set<Molecule>();
 
     // Create molecules
@@ -38,6 +51,36 @@
       } while (isOverlapping(molecule, molecules, moleculeRadius));
       molecules.push(molecule);
     }
+
+    // Ensure Il5_V2 and mepoli molecules are present
+    const requiredMolecules = ["Il5_V2", "mepoli"];
+    requiredMolecules.forEach((molecule) => {
+      if (!molecules.some((m) => m.color === `/molecules/${molecule}.webp`)) {
+        // If the molecule is not present, add it
+        molecules.push({
+          x:
+            Math.random() * (canvas.width - 2 * moleculeRadius) +
+            moleculeRadius,
+          y:
+            Math.random() * (canvas.height - 2 * moleculeRadius) +
+            moleculeRadius,
+          color: `/molecules/${molecule}.webp`,
+        });
+      }
+    });
+
+    // Cargar todas las imágenes una vez
+    moleculeColors.forEach((color) => {
+      const image = new Image();
+      image.onload = () => {
+        moleculeImages[color] = image;
+        drawMolecules(); // Redibujar las moléculas cuando las imágenes se carguen
+      };
+      image.onerror = () => {
+        console.error(`Error al cargar la imagen ${color}`);
+      };
+      image.src = color;
+    });
 
     // Event listeners for mouse interaction
     let selectedMolecule: Molecule | null = null;
@@ -91,7 +134,10 @@
         checkMoleculesToJoin(molecules, moleculesToJoin, moleculeRadius);
         if (moleculesToJoin.size === 2) {
           const joinedMolecules = Array.from(moleculesToJoin);
-          if (joinedMolecules[0].color === joinedMolecules[1].color) {
+          if (
+            joinedMolecules.some((m) => m.color === "/molecules/Il5_V2.webp") &&
+            joinedMolecules.some((m) => m.color === "/molecules/mepoli.webp")
+          ) {
             showModal = true;
             return;
           }
@@ -149,7 +195,10 @@
         checkMoleculesToJoin(molecules, moleculesToJoin, moleculeRadius);
         if (moleculesToJoin.size === 2) {
           const joinedMolecules = Array.from(moleculesToJoin);
-          if (joinedMolecules[0].color === joinedMolecules[1].color) {
+          if (
+            joinedMolecules.some((m) => m.color === "/molecules/Il5_V2.webp") &&
+            joinedMolecules.some((m) => m.color === "/molecules/mepoli.webp")
+          ) {
             showModal = true;
             return;
           }
@@ -175,16 +224,26 @@
       isDragging = false;
     });
 
-    // Draw molecules
+    // Dentro de la función drawMolecules()
     function drawMolecules() {
       if (!ctx) return;
       ctx.clearRect(0, 0, canvas.width, canvas.height);
       molecules.forEach((molecule) => {
-        ctx.beginPath();
-        ctx.arc(molecule.x, molecule.y, moleculeRadius, 0, Math.PI * 2);
-        ctx.fillStyle = molecule.color;
-        ctx.fill();
-        ctx.closePath();
+        const image = moleculeImages[molecule.color];
+        if (image && image.complete) {
+          const drawWidth = 100;
+          const drawHeight = 100;
+          const x = molecule.x - drawWidth / 2;
+          const y = molecule.y - drawHeight / 2;
+          if (
+            x >= 0 &&
+            y >= 0 &&
+            x + drawWidth <= canvas.width &&
+            y + drawHeight <= canvas.height
+          ) {
+            ctx.drawImage(image, x, y, drawWidth, drawHeight);
+          }
+        }
       });
     }
 
@@ -193,7 +252,7 @@
 </script>
 
 <section>
-  <h1 class="font-light absolute top-10 left-10 text-4xl">
+  <h1 class="font-light absolute top-10 left-10 text-4xl z-0">
     Junta la interlicina-5 con la molécula de mepolizmab
   </h1>
   <canvas id="gameCanvas" width="1840" height="800"></canvas>
@@ -208,7 +267,9 @@
       experiencia
     </p>
 
-    <Button on:click={() => step.set(GameStatus.OrderWords)}>Continuar</Button>
+    <Button on:click={() => step.set(GameStatus.OrderWords)} variant="secondary"
+      >Continuar</Button
+    >
   </main>
 </Modal>
 
@@ -218,5 +279,6 @@
     background-color: transparent;
     margin: 0 auto;
     border-radius: 10px;
+    z-index: 999;
   }
 </style>

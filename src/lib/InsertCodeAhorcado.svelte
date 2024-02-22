@@ -48,7 +48,9 @@
     <div class="flex justify-center items-center flex-col gap-5">
       <p class="text-3xl text-center text-green-500">Código correcto</p>
 
-      <Button on:click={() => step.set(GameStatus.CodeHidden)}>Continuar</Button
+      <Button
+        on:click={() => step.set(GameStatus.CodeHidden)}
+        variant="secondary">Continuar</Button
       >
     </div>
   {/if}
@@ -57,7 +59,9 @@
     <div class="flex justify-center items-center flex-col gap-5">
       <p class="text-3xl text-center text-red-500">Código incorrecto</p>
 
-      <Button on:click={() => (code = "")}>Intentar de nuevo</Button>
+      <Button on:click={() => (code = "")} variant="secondary"
+        >Intentar de nuevo</Button
+      >
     </div>
   {/if}
 </section>

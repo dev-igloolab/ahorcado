@@ -123,7 +123,9 @@
           <Button on:click={() => step.set(GameStatus.Waldo)}>Continuar</Button>
         {:else}
           <p class="text-3xl text-center text-red-500">Código incorrecto</p>
-          <Button on:click={() => resetGame()}>Intentar de nuevo</Button>
+          <Button on:click={() => resetGame()} variant="secondary"
+            >Intentar de nuevo</Button
+          >
         {/if}
       </div>
     {/if}
