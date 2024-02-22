@@ -255,7 +255,8 @@
   <h1 class="font-light absolute top-10 left-10 text-4xl z-0">
     Junta la interlicina-5 con la molécula de mepolizmab
   </h1>
-  <canvas id="gameCanvas" width="1840" height="800"></canvas>
+  <canvas id="gameCanvas" class="cursor-grab" width="1840" height="800"
+  ></canvas>
 </section>
 
 <Modal bind:showModal modalId="modalPuzzle">
