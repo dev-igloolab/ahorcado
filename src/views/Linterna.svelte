@@ -17,10 +17,10 @@
 </div>
 
 <Modal bind:showModal={showModalCode} modalId="modalHiddenCode">
-  <h2 slot="header" class="text-5xl font-bold">Código</h2>
+  <h2 slot="header" class="text-5xl font-bold text-center">Código</h2>
 
   <main>
-    <p class="text-xl text-balance">Digiten el código oculto</p>
+    <p class="text-xl text-balance text-center">Digiten el código oculto</p>
 
     <InsertCodeLinterna />
   </main>

@@ -13,10 +13,10 @@
 </div>
 
 <Modal bind:showModal={showModalCode} modalId="modalHiddenCode">
-  <h2 slot="header" class="text-5xl font-bold">Código</h2>
+  <h2 slot="header" class="text-5xl font-bold text-center">Código</h2>
 
   <main>
-    <p class="text-xl text-balance">
+    <p class="text-xl text-balance text-center">
       ¿Lograron descifrar el código secreto? Digítenlo en la pantalla, así
       podrán avanzar
     </p>

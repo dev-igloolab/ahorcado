@@ -1,6 +1,5 @@
 import type { Molecule } from "../types/Puzzle.types";
 
-
 export function distanceBetween(molecule1: Molecule, molecule2: Molecule) {
   return Math.sqrt(
     Math.pow(molecule2.x - molecule1.x, 2) +
@@ -8,8 +7,12 @@ export function distanceBetween(molecule1: Molecule, molecule2: Molecule) {
   );
 }
 
- // Check if two molecules are close enough to join
-export  function checkMoleculesToJoin( molecules: Molecule[], moleculesToJoin: Set<Molecule>, moleculeRadius: number) {
+// Check if two molecules are close enough to join
+export function checkMoleculesToJoin(
+  molecules: Molecule[],
+  moleculesToJoin: Set<Molecule>,
+  moleculeRadius: number
+) {
   molecules.forEach((molecule1) => {
     molecules.forEach((molecule2) => {
       if (
@@ -24,9 +27,12 @@ export  function checkMoleculesToJoin( molecules: Molecule[], moleculesToJoin: S
 }
 
 // Check if a molecule overlaps with any other molecule
-export function isOverlapping(newMolecule: Molecule, molecules: Molecule[], moleculeRadius: number) {
+export function isOverlapping(
+  newMolecule: Molecule,
+  molecules: Molecule[],
+  moleculeRadius: number
+): boolean {
   return molecules.some(
-    (molecule) =>
-      distanceBetween(newMolecule, molecule) < moleculeRadius * 2
+    (molecule) => distanceBetween(newMolecule, molecule) < moleculeRadius * 2
   );
 }

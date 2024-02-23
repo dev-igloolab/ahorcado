@@ -92,10 +92,10 @@
 </section>
 
 <Modal bind:showModal={showModalResultIncorrect} modalId="modalResultAhorcado">
-  <h2 slot="header" class="text-5xl font-bold">Resultado</h2>
+  <h2 slot="header" class="text-5xl font-bold text-center">Resultado</h2>
 
-  <main class="flex flex-col gap-10 justify-start">
-    <p class="text-xl">El paciente murió, pero puedes intentarlo de nuevo.</p>
+  <main class="flex flex-col gap-10 justify-start text-center">
+    <p class="text-xl">Esa no es la palabra correcta</p>
 
     <Button on:click={() => realoadGame()} variant="secondary"
       >Intentar de nuevo</Button
@@ -104,11 +104,11 @@
 </Modal>
 
 <Modal bind:showModal={showModalResult} modalId="modalResult">
-  <h2 slot="header" class="text-5xl font-bold">Resultado</h2>
+  <h2 slot="header" class="text-5xl font-bold text-center">Resultado</h2>
 
   <main class="flex flex-col gap-10 justify-start">
-    <p class="text-xl">¡Felicidades! Salvaste al paciente.</p>
-    <p>
+    <p class="text-xl text-center">¡Felicidades! Salvaste al paciente.</p>
+    <p class="text-center text-balance">
       Cierra esta ventana e ingresa el código oculto dandole click al botón de
       insertar código.
     </p>

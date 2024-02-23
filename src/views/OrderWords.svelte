@@ -22,14 +22,6 @@
     currentWord += char;
   };
 
-  const resetGame = () => {
-    ordersWords.length = 0;
-    wordModifing = -1;
-    currentWord = "";
-    haveAllwords = false;
-    isCorrectOrder = false;
-  };
-
   $: {
     // si los indices 0, 1, 2 son diferentes de undefined
     if (ordersWords[0] && ordersWords[1] && ordersWords[2]) {
@@ -55,33 +47,57 @@
 </div>
 
 <Modal bind:showModal={showModalCode} modalId="modalOrderWords">
-  <h2 slot="header" class="text-5xl font-bold">Código</h2>
+  <h2 slot="header" class="text-5xl font-bold text-center">Código</h2>
 
   <main>
-    <p class="text-xl text-balance">
+    <p class="text-xl text-balance text-center">
       Ingresen en orden los síntomas que presenta el paciente
     </p>
 
     <div class="flex flex-col gap-5 text-2xl mt-10">
       <button
-        on:click={() => (wordModifing = 0)}
-        class="rounded-full px-5 py-1 bg-[#e3e3e3] w-full flex items-center justify-start"
+        on:click={() => {
+          wordModifing = 0;
+          currentWord = ordersWords[0] ?? "";
+        }}
+        disabled={ordersWords[0] === "ASMA"}
+        class={`rounded-full px-5 py-1 bg-[#e3e3e3] w-full border-2 flex items-center justify-start ${
+          ordersWords[0] === "ASMA"
+            ? "border-green-500 text-gray-500"
+            : "border-transparent"
+        }`}
       >
-        1. {ordersWords[0] || "Click par ingresar la palabra"}
+        1. {ordersWords[0] || "click para ingresar"}
       </button>
 
       <button
-        on:click={() => (wordModifing = 1)}
-        class="rounded-full px-5 py-1 bg-[#e3e3e3] w-full flex items-center justify-start"
+        on:click={() => {
+          wordModifing = 1;
+          currentWord = ordersWords[1] ?? "";
+        }}
+        disabled={ordersWords[1] === "RSCCPN"}
+        class={`rounded-full px-5 py-1 bg-[#e3e3e3] w-full border-2 flex items-center justify-start ${
+          ordersWords[1] === "RSCCPN"
+            ? "border-green-500 text-gray-500"
+            : "border-transparent"
+        }`}
       >
-        2. {ordersWords[1] || "Click par ingresar la palabra"}
+        2. {ordersWords[1] || "click para ingresar"}
       </button>
 
       <button
-        on:click={() => (wordModifing = 2)}
-        class="rounded-full px-5 py-1 bg-[#e3e3e3] w-full flex items-center justify-start"
+        on:click={() => {
+          wordModifing = 2;
+          currentWord = ordersWords[2] ?? "";
+        }}
+        disabled={ordersWords[2] === "AINES"}
+        class={`rounded-full px-5 py-1 bg-[#e3e3e3] w-full border-2 flex items-center justify-start ${
+          ordersWords[2] === "AINES"
+            ? "border-green-500 text-gray-500"
+            : "border-transparent"
+        }`}
       >
-        3. {ordersWords[2] || "Click par ingresar la palabra"}
+        3. {ordersWords[2] || "click para ingresar"}
       </button>
     </div>
 
@@ -103,6 +119,35 @@
           >
         {/each}
 
+        <!-- Add button to erase last char -->
+        <button
+          class="text-black w-36 bg-transparent hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-3xl border border-black text-center disabled:cursor-not-allowed disabled:bg-slate-400 aspect-square h-16 flex items-center justify-center"
+          on:click={() => {
+            currentWord = currentWord.slice(0, -1);
+          }}
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            class="lucide lucide-delete"
+            ><path
+              d="M20 5H9l-7 7 7 7h11a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2Z"
+            /><line x1="18" x2="12" y1="9" y2="15" /><line
+              x1="12"
+              x2="18"
+              y1="9"
+              y2="15"
+            /></svg
+          >
+        </button>
+
         <button
           class="text-white bg-black hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-3xl border border-black text-center disabled:cursor-not-allowed disabled:bg-slate-400 aspect-square w-full h-16 flex items-center justify-center"
           on:click={() => {
@@ -120,11 +165,9 @@
       <div class="flex justify-center items-center flex-col gap-5 mt-10">
         {#if isCorrectOrder}
           <p class="text-3xl text-center text-green-500">Código correcto</p>
-          <Button on:click={() => step.set(GameStatus.Waldo)}>Continuar</Button>
-        {:else}
-          <p class="text-3xl text-center text-red-500">Código incorrecto</p>
-          <Button on:click={() => resetGame()} variant="secondary"
-            >Intentar de nuevo</Button
+          <Button
+            on:click={() => step.set(GameStatus.Waldo)}
+            variant="secondary">Continuar</Button
           >
         {/if}
       </div>

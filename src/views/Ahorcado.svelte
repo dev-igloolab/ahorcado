@@ -75,10 +75,10 @@
 </Modal>
 
 <Modal bind:showModal={showModalCode} modalId="modalCode">
-  <h2 slot="header" class="text-5xl font-bold">Código</h2>
+  <h2 slot="header" class="text-5xl font-bold text-center">Código</h2>
 
   <main>
-    <p class="text-xl">
+    <p class="text-xl text-center text-balance">
       Este código cumple una función vital para salvar la vida del paciente,
       desbloqueará un instrumento para poder ver con mayor claridad las
       alternativas de mejoría.

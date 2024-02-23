@@ -17,7 +17,7 @@
     const ctx = canvas.getContext("2d");
 
     const molecules: Molecule[] = [];
-    const moleculeRadius = 50;
+    const moleculeRadius = 100;
     const moleculeColors = [
       "/molecules/celula-epitelia-v4.webp",
       "/molecules/celula-plasmatica-2.webp",
@@ -35,8 +35,10 @@
     const moleculesToJoin = new Set<Molecule>();
 
     // Create molecules
+    const maxAttempts = 100; // Límite de intentos para evitar bucles infinitos
     for (let i = 0; i < 10; i++) {
       let molecule: Molecule;
+      let attempts = 0;
       do {
         molecule = {
           x:
@@ -48,24 +50,47 @@
           color:
             moleculeColors[Math.floor(Math.random() * moleculeColors.length)],
         };
+        attempts++;
+        // Si se excede el límite de intentos, se sale del bucle
+        if (attempts >= maxAttempts) {
+          console.error(
+            `No se pudo colocar una molécula después de ${maxAttempts} intentos.`
+          );
+          break;
+        }
       } while (isOverlapping(molecule, molecules, moleculeRadius));
+      // Solo agregar la molécula si se encontró una posición válida
       molecules.push(molecule);
     }
 
     // Ensure Il5_V2 and mepoli molecules are present
     const requiredMolecules = ["Il5_V2", "mepoli"];
     requiredMolecules.forEach((molecule) => {
+      // Check if the molecule is already present
       if (!molecules.some((m) => m.color === `/molecules/${molecule}.webp`)) {
-        // If the molecule is not present, add it
-        molecules.push({
-          x:
-            Math.random() * (canvas.width - 2 * moleculeRadius) +
-            moleculeRadius,
-          y:
-            Math.random() * (canvas.height - 2 * moleculeRadius) +
-            moleculeRadius,
-          color: `/molecules/${molecule}.webp`,
-        });
+        let newMolecule: Molecule;
+        let attempts = 0;
+        do {
+          newMolecule = {
+            x:
+              Math.random() * (canvas.width - 2 * moleculeRadius) +
+              moleculeRadius,
+            y:
+              Math.random() * (canvas.height - 2 * moleculeRadius) +
+              moleculeRadius,
+            color: `/molecules/${molecule}.webp`,
+          };
+          attempts++;
+          // Si se excede el límite de intentos, se sale del bucle
+          if (attempts >= maxAttempts) {
+            console.error(
+              `No se pudo colocar la molécula ${molecule} después de ${maxAttempts} intentos.`
+            );
+            break;
+          }
+        } while (isOverlapping(newMolecule, molecules, moleculeRadius));
+        // Solo agregar la molécula si se encontró una posición válida
+        molecules.push(newMolecule);
       }
     });
 
@@ -122,8 +147,24 @@
     canvas.addEventListener("mousemove", function (event) {
       if (isDragging && selectedMolecule) {
         const mousePos = getMousePos(event);
-        selectedMolecule.x = mousePos.x;
-        selectedMolecule.y = mousePos.y;
+        if (
+          mousePos.x < moleculeRadius ||
+          mousePos.x > canvas.width - moleculeRadius ||
+          mousePos.y < moleculeRadius ||
+          mousePos.y > canvas.height - moleculeRadius
+        ) {
+          // La molécula está cerca del borde, moverla a una posición aleatoria dentro del canvas
+          selectedMolecule.x =
+            Math.random() * (canvas.width - 2 * moleculeRadius) +
+            moleculeRadius;
+          selectedMolecule.y =
+            Math.random() * (canvas.height - 2 * moleculeRadius) +
+            moleculeRadius;
+        } else {
+          // La molécula está dentro del canvas, actualizar su posición según el mouse
+          selectedMolecule.x = mousePos.x;
+          selectedMolecule.y = mousePos.y;
+        }
         drawMolecules();
       }
     });
@@ -180,10 +221,26 @@
 
     canvas.addEventListener("touchmove", function (event) {
       event.preventDefault();
-      if (isDragging && selectedMolecule) {
+      if (isDragging && selectedMolecule && event.touches.length === 1) {
         const touchPos = getMousePos(event);
-        selectedMolecule.x = touchPos.x;
-        selectedMolecule.y = touchPos.y;
+        if (
+          touchPos.x < moleculeRadius ||
+          touchPos.x > canvas.width - moleculeRadius ||
+          touchPos.y < moleculeRadius ||
+          touchPos.y > canvas.height - moleculeRadius
+        ) {
+          // La molécula está cerca del borde, moverla a una posición aleatoria dentro del canvas
+          selectedMolecule.x =
+            Math.random() * (canvas.width - 2 * moleculeRadius) +
+            moleculeRadius;
+          selectedMolecule.y =
+            Math.random() * (canvas.height - 2 * moleculeRadius) +
+            moleculeRadius;
+        } else {
+          // La molécula está dentro del canvas, actualizar su posición según el toque
+          selectedMolecule.x = touchPos.x;
+          selectedMolecule.y = touchPos.y;
+        }
         drawMolecules();
       }
     });
@@ -231,18 +288,27 @@
       molecules.forEach((molecule) => {
         const image = moleculeImages[molecule.color];
         if (image && image.complete) {
-          const drawWidth = 100;
-          const drawHeight = 100;
-          const x = molecule.x - drawWidth / 2;
-          const y = molecule.y - drawHeight / 2;
+          let drawWidth = 200;
+          let drawHeight = 200;
+          let x = molecule.x - drawWidth / 2;
+          let y = molecule.y - drawHeight / 2;
+
+          // Verificar si la molécula está completamente dentro del canvas
           if (
-            x >= 0 &&
-            y >= 0 &&
-            x + drawWidth <= canvas.width &&
-            y + drawHeight <= canvas.height
+            x < 0 ||
+            y < 0 ||
+            x + drawWidth > canvas.width ||
+            y + drawHeight > canvas.height
           ) {
-            ctx.drawImage(image, x, y, drawWidth, drawHeight);
+            // La molécula no está completamente dentro del canvas, ajustar su tamaño y posición
+            drawWidth *= 0.5; // Reducir el ancho a la mitad
+            drawHeight *= 0.5; // Reducir la altura a la mitad
+            // Asignar una nueva posición aleatoria dentro del canvas
+            x = Math.random() * (canvas.width - drawWidth);
+            y = Math.random() * (canvas.height - drawHeight);
           }
+
+          ctx.drawImage(image, x, y, drawWidth, drawHeight);
         }
       });
     }
@@ -251,21 +317,21 @@
   });
 </script>
 
-<section>
+<section class="flex justify-center items-center">
   <h1 class="font-light absolute top-10 left-10 text-4xl z-0">
-    Junta la interlicina-5 con la molécula de mepolizmab
+    Junta la Interleucina-5 con la molécula de mepolizmab
   </h1>
-  <canvas id="gameCanvas" class="cursor-grab" width="1840" height="800"
+  <canvas id="gameCanvas" class="cursor-grab" width="1800" height="900"
   ></canvas>
 </section>
 
 <Modal bind:showModal modalId="modalPuzzle">
-  <h2 slot="header" class="text-5xl font-bold">¡Excelente!</h2>
+  <h2 slot="header" class="text-5xl font-bold text-center">¡Excelente!</h2>
 
   <main class="flex flex-col gap-10 items-center justify-center">
-    <p class="text-xl">
-      Eres bueno en esto de juntar cosas... dale a continuar para seguir con la
-      experiencia
+    <p class="text-xl text-center text-balance">
+      Haz juntado las moléculas y células correctas, dirígete a continuar para
+      seguir con la experiencia.
     </p>
 
     <Button on:click={() => step.set(GameStatus.OrderWords)} variant="secondary"
@@ -279,7 +345,6 @@
     display: block;
     background-color: transparent;
     margin: 0 auto;
-    border-radius: 10px;
     z-index: 999;
   }
 </style>
