@@ -319,7 +319,7 @@
 
 <section class="flex justify-center items-center">
   <h1 class="font-light absolute top-10 left-10 text-4xl z-0">
-    Junta la Interleucina-5 con la molécula de mepolizmab
+    Junta la Interleucina-5 con la molécula de Mepolizumab
   </h1>
   <canvas id="gameCanvas" class="cursor-grab" width="1800" height="900"
   ></canvas>

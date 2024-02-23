@@ -10,7 +10,7 @@
   let showModalCode = false;
 
   const hints = [
-    "Es clave en la inflamación T2",
+    "Es clave en la inflamación T2.",
     "Tiene interacción con mas de 5 blancos celulares.",
     "Su inhibición logra el control del paciente con asma grave T2.",
   ];
