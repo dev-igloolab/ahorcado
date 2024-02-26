@@ -31,9 +31,9 @@
 
         <div class="col-span-4 flex flex-col gap-10">
           <p class="text-3xl font-light">
-            Para comenzar, descubran cuál es <strong class="font-bold"
-              >LA PALABRA</strong
-            > para salvar la vida de este paciente.
+            Descubran cuál es <strong class="font-bold">LA PALABRA</strong> para
+            salvar la vida de este paciente, está es la
+            <strong class="font-bold">clave</strong> para avanzar.
           </p>
 
           <WordToGess />
