@@ -15,7 +15,7 @@
   <h2 class="font-bold text-6xl">Han salvado al paciente</h2>
 
   <p class="text-balance text-5xl text-center">
-    Compartan el nombre del medicamento y su molécula al agente sanidad para
+    Compartan el nombre del medicamento y su molécula al agente de sanidad para
     salir de la habitación.
   </p>
 </section>
