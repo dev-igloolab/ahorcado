@@ -109,7 +109,7 @@
   <main class="flex flex-col gap-10 justify-start">
     <p class="text-xl text-center">¡Felicidades! Salvaste al paciente.</p>
     <p class="text-center text-balance">
-      Cierra esta ventana e ingresa el código oculto dandole click al botón de
+      Cierra esta ventana e ingresa el código oculto dándole click al botón de
       insertar código.
     </p>
   </main>
