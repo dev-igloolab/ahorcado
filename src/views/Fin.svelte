@@ -10,7 +10,7 @@
   <h2 class="font-bold text-6xl">Han salvado al paciente.</h2>
 
   <p class="text-balance text-5xl text-center">
-    Para salir de la habitación acérquense al agente de sanidad y diganle el
+    Para salir de la habitación acérquense al agente de sanidad y díganle el
     nombre del medicamento y su molécula.
   </p>
 </section>

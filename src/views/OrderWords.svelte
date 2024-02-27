@@ -43,7 +43,7 @@
     ¿Cuáles son las palabras que desde diferentes ángulos encontraron?
   </h2>
 
-  <Button on:click={() => (showModalCode = true)}>Ingresar código</Button>
+  <Button on:click={() => (showModalCode = true)}>Continuar</Button>
 </div>
 
 <Modal bind:showModal={showModalCode} modalId="modalOrderWords">

@@ -31,8 +31,8 @@
 
         <div class="col-span-4 flex flex-col gap-10">
           <p class="text-3xl font-light">
-            Descubran cuál es <strong class="font-bold">LA PALABRA</strong> para
-            salvar la vida de este paciente, esta es la
+            Descubran cuál es <strong class="font-bold">LA PALABRA</strong>
+            clave para salvar la vida de este paciente. La organización es la
             <strong class="font-bold">clave</strong> para avanzar.
           </p>
 

@@ -12,4 +12,4 @@ export enum GameStatus {
   GameOver,
 }
 
-export const step = writable<GameStatus>(GameStatus.Welcome);
+export const step = writable<GameStatus>(GameStatus.Ahorcado);

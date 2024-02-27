@@ -20,7 +20,7 @@
   <h2 slot="header" class="text-5xl font-bold text-center">Código</h2>
 
   <main>
-    <p class="text-xl text-balance text-center">Digiten el código oculto</p>
+    <p class="text-xl text-balance text-center">Digiten la palabra oculto</p>
 
     <InsertCodeLinterna />
   </main>

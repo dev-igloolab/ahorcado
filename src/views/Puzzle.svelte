@@ -330,8 +330,8 @@
 
   <main class="flex flex-col gap-10 items-center justify-center">
     <p class="text-xl text-center text-balance">
-      Haz juntado las moléculas y células correctas, dirígete a continuar para
-      seguir con la experiencia.
+      Haz hecho la combinación correcta, dirígete a continuar para seguir con la
+      experiencia.
     </p>
 
     <Button on:click={() => step.set(GameStatus.OrderWords)} variant="secondary"
