@@ -107,9 +107,11 @@
   <h2 slot="header" class="text-5xl font-bold text-center">Resultado</h2>
 
   <main class="flex flex-col gap-10 justify-start">
-    <p class="text-xl text-center">¡Felicitaciones! Salvaste al paciente.</p>
+    <p class="text-xl text-center text-balance">
+      ¡Felicitaciones, pueden continuar salvando la vida del paciente!
+    </p>
     <p class="text-center text-balance">
-      Cierra esta ventana e ingresa el código oculto dándole click al botón de
+      Cierra esta ventana e ingresa el código oculto dandole click al botón de
       insertar código.
     </p>
   </main>

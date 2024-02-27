@@ -47,11 +47,13 @@
 </div>
 
 <Modal bind:showModal={showModalCode} modalId="modalOrderWords">
-  <h2 slot="header" class="text-5xl font-bold text-center">Código</h2>
+  <h2 slot="header" class="text-5xl font-bold text-center">
+    Orden de palabras
+  </h2>
 
   <main>
     <p class="text-xl text-balance text-center">
-      Ingresen en orden los síntomas que presenta el paciente
+      Ingresen en orden las palabras que encontraron para avanzar
     </p>
 
     <div class="flex flex-col gap-5 text-2xl mt-10">
