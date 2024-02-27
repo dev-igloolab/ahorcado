@@ -11,11 +11,15 @@
     class="h-full mx-auto"
   />
 
-  <h1 class="font-bold text-9xl">¡Felicidades!</h1>
-  <h2 class="font-bold text-6xl">Han salvado al paciente</h2>
+  <h1 class="font-bold text-9xl">¡Felicitaciones!</h1>
+  <h2 class="font-bold text-6xl">Han salvado al paciente.</h2>
 
   <p class="text-balance text-5xl text-center">
-    Compartan el nombre del medicamento y su molécula al agente de sanidad para
-    salir de la habitación.
+    La contraseña para salir de la habitación es el nombre del medicamento y su
+    molecula.
+  </p>
+
+  <p class="text-balance text-5xl text-center">
+    Dirijanse al agente de sanidad.
   </p>
 </section>
